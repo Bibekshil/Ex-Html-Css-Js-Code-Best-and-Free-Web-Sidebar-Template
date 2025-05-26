@@ -10,367 +10,365 @@
     <link rel="icon" type="image/png" href="https://i.ibb.co/wZFqkL6J/Untitledm.png">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "DM Serif Display", serif;
-        }
-        html { scroll-behavior: smooth; }
-        body {
-            background-color: #f5f5f5;
-            color: #222;
-            line-height: 1.7;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-        header {
-            background: linear-gradient(135deg, #2c3e50, #34495e);
-            color: white;
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.16);
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(5px);
-        }
-        nav ul {
-            display: flex;
-            align-items: center;
-            list-style: none;
-            gap: 1.3rem;
-        }
-        nav li {
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            padding: 8px 14px;
-            border-radius: 4px;
-        }
-        nav li:hover {
-            background-color: rgba(255,255,255,0.08);
-            color: #3498db;
-        }
-     
-        #myButton {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.7rem;
-            cursor: pointer;
-            width: 44px;
-            height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            z-index: 120;
-            position: relative;
-            border-radius: 50%;
-        }
-        #myButton:hover {
-            background-color: rgba(255,255,255,0.12);
-            color: #3498db;
-            transform: rotate(90deg);
-        }
-        #myButton::before {
-            content: "☰";
-        }
-        #myButton.active::before {
-            content: "✕";
-        }
-        #sidebar {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            color: white;
-            height: 100vh;
-            width: 270px;
-            position: fixed;
-            top: 0;
-            left: -270px;
-            transition: left 0.36s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 5px 0 20px rgba(0,0,0,0.14);
-            z-index: 110;
-            padding: 4.4rem 1.5rem 1.1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
-            overflow-y: auto;
-            will-change: left;
-        }
-        #sidebar.show {
-            left: 0;
-        }
-        .sidebar-link {
-            background: rgba(255,255,255,0.10);
-            color: white;
-            text-align: left;
-            width: 100%;
-            text-decoration: none;
-            height: 46px;
-            border-radius: 8px;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            font-size: 1.08rem;
-            transition: all 0.3s;
-            padding: 0 1.35rem;
-            gap: 15px;
-            position: relative;
-            overflow: hidden;
-            font-weight: 600;
-            letter-spacing: .03em;
-        }
-        .sidebar-link:hover {
-            background-color: rgba(255,255,255,0.18);
-            color: #ffd700;
-            transform: translateX(7px) scale(1.03);
-        }
-        .sidebar-link:active {
-            background-color: rgba(255,255,255,0.08);
-            transform: scale(0.98);
-        }
-        .sidebar-link::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 3px;
-            background-color: #ffd700;
-            opacity: 0.7;
-            transform: scaleY(0);
-            transition: transform 0.3s;
-        }
-        .sidebar-link:hover::after {
-            transform: scaleY(1);
-        }
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            z-index: 105;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
-            backdrop-filter: blur(3px);
-        }
-        .overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-        #login {
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: all 0.3s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.11);
-        }
-        #login:hover {
-            background: linear-gradient(135deg, #2980b9, #3498db);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.14);
-        }
-        #userAvatar {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            color: #fff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-            font-weight: bold;
-            border: none;
-            cursor: pointer;
-            margin-left: 5px;
-            transition: background 0.3s, box-shadow 0.3s;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.13);
-        }
-        #userAvatar:hover {
-            background: linear-gradient(135deg, #2980b9, #3498db);
-        }
-        .auth-modal {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.13);
-            z-index: 200;
-            display: none;
-            flex-direction: column;
-            gap: 1rem;
-            width: 92%;
-            max-width: 400px;
-            animation: modalFadeIn 0.3s ease-out;
-        }
-        @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: translate(-50%, -40%);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, -50%);
-            }
-        }
-        .auth-modal input {
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 1rem;
-            width: 100%;
-            margin-bottom: 0.5rem;
-            transition: all 0.3s;
-        }
-        .auth-modal input:focus {
-            border-color: #3498db;
-            box-shadow: 0 0 0 3px rgba(52,152,219,0.2);
-            outline: none;
-        }
-        .auth-modal button {
-            background: linear-gradient(135deg, #2c3e50, #34495e);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s;
-            width: 100%;
-            margin-top: 0.5rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.11);
-        }
-        .auth-modal button:hover {
-            background: linear-gradient(135deg, #34495e, #2c3e50);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.14);
-        }
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #777;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: all 0.3s;
-        }
-        .close-btn:hover {
-            background-color: #f5f5f5;
-            color: #333;
-            transform: rotate(90deg);
-        }
-        .auth-toggle {
-            text-align: center;
-            color: #3498db;
-            cursor: pointer;
-            font-size: 0.96rem;
-            margin-top: 0.5rem;
-            transition: all 0.3s;
-        }
-        .auth-toggle:hover {
-            text-decoration: underline;
-            color: #2980b9;
-        }
-        .modal-title {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: #2c3e50;
-            position: relative;
-            font-size: 1.4rem;
-        }
-        .modal-title::after {
-            content: '';
-            display: block;
-            width: 50px;
-            height: 3px;
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            margin: 0.5rem auto 0;
-            border-radius: 3px;
-        }
-        .agreement {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-        main.content {
-            padding: 2.2rem 1rem 2rem 1rem;
-            margin-top: 70px;
-            min-height: 80vh;
-            transition: transform 0.34s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .content.shifted {
-            transform: translateX(270px);
-        }
-        #userPage {
-            text-align: center;
-            margin-top: 4rem;
-        }
-        #welcomePage {
-            text-align: center;
-            margin-top: 4rem;
-        }
-        @media (min-width: 768px) {
-            .content {
-                padding: 2.4rem 3rem 2rem 3rem;
-            }
-            #sidebar {
-                width: 320px;
-                left: -320px;
-            }
-            #sidebar.show {
-                left: 0;
-            }
-            .content.shifted {
-                transform: translateX(320px);
-                margin-left: 0;
-            }
-        }
-        @media (max-width: 500px) {
-            #sidebar,
-            #sidebar.show {
-                width: 98vw;
-                left: -98vw;
-            }
-            #sidebar.show {
-                left: 0;
-            }
-            .content.shifted {
-                transform: translateX(98vw);
-            }
-        }
-    </style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "DM Serif Display", serif;
+}
+html { scroll-behavior: smooth; }
+body {
+    background-color: #f5f5f5;
+    color: #222;
+    line-height: 1.7;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+header {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    color: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.16);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+nav ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 1.3rem;
+}
+nav li {
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 14px;
+    border-radius: 4px;
+}
+nav li:hover {
+    background-color: rgba(255,255,255,0.08);
+    color: #3498db;
+}
+#myButton {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.7rem;
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    z-index: 120;
+    position: relative;
+    border-radius: 50%;
+}
+#myButton:hover {
+    background-color: rgba(255,255,255,0.12);
+    color: #3498db;
+    transform: rotate(90deg);
+}
+#myButton::before {
+    content: "☰";
+}
+#myButton.active::before {
+    content: "✕";
+}
+#sidebar {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    height: 100vh;
+    width: 270px;
+    position: fixed;
+    top: 0;
+    left: -270px;
+    transition: left 0.36s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 5px 0 20px rgba(0,0,0,0.14);
+    z-index: 110;
+    padding: 4.4rem 1.5rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    overflow-y: auto;
+    will-change: left;
+}
+#sidebar.show {
+    left: 0;
+}
+.sidebar-link {
+    background: rgba(255,255,255,0.10);
+    color: white;
+    text-align: left;
+    width: 100%;
+    text-decoration: none;
+    height: 46px;
+    border-radius: 8px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 1.08rem;
+    transition: all 0.3s;
+    padding: 0 1.35rem;
+    gap: 15px;
+    position: relative;
+    overflow: hidden;
+    font-weight: 600;
+    letter-spacing: .03em;
+}
+.sidebar-link:hover {
+    background-color: rgba(255,255,255,0.18);
+    color: #ffd700;
+    transform: translateX(7px) scale(1.03);
+}
+.sidebar-link:active {
+    background-color: rgba(255,255,255,0.08);
+    transform: scale(0.98);
+}
+.sidebar-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background-color: #ffd700;
+    opacity: 0.7;
+    transform: scaleY(0);
+    transition: transform 0.3s;
+}
+.sidebar-link:hover::after {
+    transform: scaleY(1);
+}
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 105;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    backdrop-filter: blur(3px);
+}
+.overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+#login {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.11);
+}
+#login:hover {
+    background: linear-gradient(135deg, #2980b9, #3498db);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.14);
+}
+#userAvatar {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    margin-left: 5px;
+    transition: background 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.13);
+}
+#userAvatar:hover {
+    background: linear-gradient(135deg, #2980b9, #3498db);
+}
+.auth-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.13);
+    z-index: 200;
+    display: none;
+    flex-direction: column;
+    gap: 1rem;
+    width: 92%;
+    max-width: 400px;
+    animation: modalFadeIn 0.3s ease-out;
+}
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -40%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+.auth-modal input {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s;
+}
+.auth-modal input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52,152,219,0.2);
+    outline: none;
+}
+.auth-modal button {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s;
+    width: 100%;
+    margin-top: 0.5rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.11);
+}
+.auth-modal button:hover {
+    background: linear-gradient(135deg, #34495e, #2c3e50);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.14);
+}
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #777;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s;
+}
+.close-btn:hover {
+    background-color: #f5f5f5;
+    color: #333;
+    transform: rotate(90deg);
+}
+.auth-toggle {
+    text-align: center;
+    color: #3498db;
+    cursor: pointer;
+    font-size: 0.96rem;
+    margin-top: 0.5rem;
+    transition: all 0.3s;
+}
+.auth-toggle:hover {
+    text-decoration: underline;
+    color: #2980b9;
+}
+.modal-title {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+    position: relative;
+    font-size: 1.4rem;
+}
+.modal-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    margin: 0.5rem auto 0;
+    border-radius: 3px;
+}
+.agreement {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+main.content {
+    padding: 2.2rem 1rem 2rem 1rem;
+    margin-top: 70px;
+    min-height: 80vh;
+    transition: transform 0.34s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.content.shifted {
+    transform: translateX(270px);
+}
+#welcomePage {
+    text-align: center;
+    margin-top: 4rem;
+}
+#userPage {
+    text-align: center;
+    margin-top: 4rem;
+}
+@media (min-width: 768px) {
+    .content {
+        padding: 2.4rem 3rem 2rem 3rem;
+    }
+    #sidebar {
+        width: 320px;
+        left: -320px;
+    }
+    #sidebar.show {
+        left: 0;
+    }
+    .content.shifted {
+        transform: translateX(320px);
+        margin-left: 0;
+    }
+}
+@media (max-width: 500px) {
+    #sidebar,
+    #sidebar.show {
+        width: 98vw;
+        left: -98vw;
+    }
+    #sidebar.show {
+        left: 0;
+    }
+    .content.shifted {
+        transform: translateX(98vw);
+    }
+}    </style>
 </head>
 <body>
     <header>
